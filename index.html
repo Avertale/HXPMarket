@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApexTrade | Value Trading Platform</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #141414;
+            --border-color: #262626;
+            --accent-red: #ff1e1e;
+            --accent-red-glow: rgba(255, 30, 30, 0.2);
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --green: #00ff66;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header / Navbar */
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 2px solid var(--accent-red);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px var(--accent-red-glow);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background-color: var(--accent-red);
+            transform: rotate(45deg);
+            box-shadow: 0 0 10px var(--accent-red);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-main);
+        }
+
+        h1 span {
+            color: var(--accent-red);
+        }
+
+        .user-status {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            background: var(--bg-dark);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Main Layout */
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Dashboard Sections */
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Portfolio Overview */
+        .portfolio-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-box {
+            background: var(--bg-dark);
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-red);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 0.25rem;
+        }
+
+        /* Trading Asset Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            font-weight: 500;
+        }
+
+        .text-red {
+            color: var(--accent-red);
+        }
+
+        .text-green {
+            color: var(--green);
+        }
+
+        /* Trade Action Form */
+        .trade-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        select, input {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent-red);
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        button {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-buy {
+            background-color: var(--green);
+            color: #000;
+        }
+
+        .btn-sell {
+            background-color: var(--accent-red);
+            color: #fff;
+            box-shadow: 0 0 10px var(--accent-red-glow);
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* Activity Log */
+        .log-container {
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .log-item {
+            padding: 0.4rem;
+            background: var(--bg-dark);
+            border-left: 2px solid var(--border-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <div class="logo-icon"></div>
+            <h1>Apex<span>Trade</span></h1>
+        </div>
+        <div class="user-status">
+            Balance: <span id="user-balance" class="text-green">$10,000.00</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="left-column">
+            
+            <div class="card">
+                <div class="card-title">Portfolio Summary</div>
+                <div class="portfolio-stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Net Asset Value</div>
+                        <div class="stat-value" id="nav-value">$10,000.00</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Total P/L</div>
+                        <div class="stat-value text-green" id="total-pl">+$0.00 (0.00%)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Live Asset Values</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Asset</th>
+                            <th>Ticker</th>
+                            <th>Current Value</th>
+                            <th>24h Change</th>
+                        </tr>
+                    </thead>
+                    <tbody id="asset-table-body">
+                        </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="right-column">
+            
+            <div class="card">
+                <div class="card-title">Execute Order</div>
+                <div class="trade-form">
+                    <div class="input-group">
+                        <label for="asset-select">Select Asset</label>
+                        <select id="asset-select">
+                            </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="trade-amount">Quantity</label>
+                        <input type="number" id="trade-amount" min="1" value="1">
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn-buy" onclick="executeTrade('BUY')">Buy</button>
+                        <button class="btn-sell" onclick="executeTrade('SELL')">Sell</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Transaction Log</div>
+                <div class="log-container" id="log-container">
+                    <div class="log-item">[System] Connected to secure trading feed.</div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 ApexTrade Protocol. All rights reserved. Built for high-frequency value assessment.
+    </footer>
+
+    <script>
+        // Initial Mock Data for Trading Values
+        const assets = [
+            { name: "Apex Protocol", ticker: "APEX", price: 342.50, change: 4.12 },
+            { name: "Vanguard Core", ticker: "VGC", price: 125.80, change: -1.45 },
+            { name: "Nexus Quantum", ticker: "NXQ", price: 89.20, change: 8.64 },
+            { name: "Obsidian Coin", ticker: "OBS", price: 12.40, change: -3.21 },
+            { name: "CyberNode Token", ticker: "CYBR", price: 450.00, change: 1.15 }
+        ];
+
+        let userBalance = 10000.00;
+        let portfolioHoldings = {}; // Ticker -> Quantity
+
+        // Initialize UI Elements
+        function initApp() {
+            const tableBody = document.getElementById('asset-table-body');
+            const assetSelect = document.getElementById('asset-select');
+
+            tableBody.innerHTML = '';
+            assetSelect.innerHTML = '';
+
+            assets.forEach(asset => {
+                // Populate Table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${asset.name}</strong></td>
+                    <td class="text-muted">${asset.ticker}</td>
+                    <td id="price-${asset.ticker}">$${asset.price.toFixed(2)}</td>
+                    <td class="${asset.change >= 0 ? 'text-green' : 'text-red'}" id="change-${asset.ticker}">
+                        ${asset.change >= 0 ? '+' : ''}${asset.change.toFixed(2)}%
+                    </td>
+                `;
+                tableBody.appendChild(row);
+
+                // Populate Dropdown
+                const option = document.createElement('option');
+                option.value = asset.ticker;
+                option.textContent = `${asset.name} (${asset.ticker})`;
+                assetSelect.appendChild(option);
+
+                // Initialize Holdings tracker
+                portfolioHoldings[asset.ticker] = 0;
+            });
+
+            updatePortfolioDisplay();
+        }
+
+        // Simulate Live Market Value Fluctuations
+        function simulateMarket() {
+            assets.forEach(asset => {
+                // Random fluctuation between -1.5% and +1.5%
+                const fluctuation = (Math.random() * 3 - 1.48) / 100;
+                asset.price = Math.max(1, asset.price * (1 + fluctuation));
+                asset.change += fluctuation * 10;
+
+                // Update DOM elements dynamically
+                const priceEl = document.getElementById(`price-${asset.ticker}`);
+                const changeEl = document.getElementById(`change-${asset.ticker}`);
+
+                if (priceEl && changeEl) {
+                    priceEl.textContent = `$${asset.price.toFixed(2)}`;
+                    changeEl.textContent = `${asset.change >= 0 ? '+' : ''}${asset.change.toFixed(2)}%`;
+                    changeEl.className = asset.change >= 0 ? 'text-green' : 'text-red';
+                }
+            });
+
+            updatePortfolioDisplay();
+        }
+
+        // Execute Buy / Sell Orders
+        function executeTrade(type) {
+            const ticker = document.getElementById('asset-select').value;
+            const quantity = parseInt(document.getElementById('trade-amount').value);
+            const asset = assets.find(a => a.ticker === ticker);
+
+            if (!asset || isNaN(quantity) || quantity <= 0) {
+                logMessage("Error: Invalid trade parameters.");
+                return;
+            }
+
+            const totalCost = asset.price * quantity;
+
+            if (type === 'BUY') {
+                if (userBalance < totalCost) {
+                    logMessage(`Failed BUY: Insufficient funds for ${quantity}x ${ticker}.`);
+                    alert("Insufficient balance to complete this order.");
+                    return;
+                }
+                userBalance -= totalCost;
+                portfolioHoldings[ticker] += quantity;
+                logMessage(`SUCCESS: Bought ${quantity}x ${ticker} at $${asset.price.toFixed(2)}`);
+            } else if (type === 'SELL') {
+                if (portfolioHoldings[ticker] < quantity) {
+                    logMessage(`Failed SELL: You don't own ${quantity}x ${ticker}.`);
+                    alert("You do not own enough units to sell this amount.");
+                    return;
+                }
+                userBalance += totalCost;
+                portfolioHoldings[ticker] -= quantity;
+                logMessage(`SUCCESS: Sold ${quantity}x ${ticker} at $${asset.price.toFixed(2)}`);
+            }
+
+            updatePortfolioDisplay();
+        }
+
+        // Calculate and Update Portfolio Metrics
+        function updatePortfolioDisplay() {
+            document.getElementById('user-balance').textContent = `$${userBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+
+            let holdingsValue = 0;
+            assets.forEach(asset => {
+                holdingsValue += portfolioHoldings[asset.ticker] * asset.price;
+            });
+
+            const netAssetValue = userBalance + holdingsValue;
+            document.getElementById('nav-value').textContent = `$${netAssetValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+
+            const totalPL = netAssetValue - 10000;
+            const plPercentage = (totalPL / 10000) * 100;
+            const plElement = document.getElementById('total-pl');
+            
+            plElement.textContent = `${totalPL >= 0 ? '+' : ''}$${totalPL.toFixed(2)} (${plPercentage.toFixed(2)}%)`;
+            plElement.className = `stat-value ${totalPL >= 0 ? 'text-green' : 'text-red'}`;
+        }
+
+        // Add to Transaction Activity Log
+        function logMessage(text) {
+            const container = document.getElementById('log-container');
+            const timestamp = new Date().toLocaleTimeString();
+            const logItem = document.createElement('div');
+            logItem.className = 'log-item';
+            logItem.textContent = `[${timestamp}] ${text}`;
+            container.prepend(logItem);
+        }
+
+        // Run application on load & set ticker interval (updates every 3 seconds)
+        window.onload = () => {
+            initApp();
+            setInterval(simulateMarket, 3000);
+        };
+    </script>
+</body>
+</html>
