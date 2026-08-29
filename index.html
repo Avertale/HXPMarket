@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ApexTrade | Value Trading Platform</title>
+    <title>HXPMarket | Knife VS Guns Duels Values</title>
     <style>
         :root {
-            --bg-dark: #0a0a0a;
-            --bg-card: #141414;
-            --border-color: #262626;
-            --accent-red: #ff1e1e;
-            --accent-red-glow: rgba(255, 30, 30, 0.2);
-            --text-main: #ffffff;
-            --text-muted: #888888;
-            --green: #00ff66;
+            --bg-dark: #070707;
+            --bg-card: #0f0f0f;
+            --border-color: #1f1f1f;
+            --accent-red: #8b0000; /* Shadier blood red */
+            --accent-red-bright: #b22222;
+            --accent-red-glow: rgba(139, 0, 0, 0.25);
+            --text-main: #f0f0f0;
+            --text-muted: #777777;
+            --tier-godly: #ff2222;
+            --tier-legendary: #ff8800;
+            --tier-epic: #aa00ff;
+            --tier-rare: #0088ff;
         }
 
         * {
@@ -35,113 +39,116 @@
         header {
             background-color: var(--bg-card);
             border-bottom: 2px solid var(--accent-red);
-            padding: 1rem 2rem;
+            padding: 1.2rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 20px var(--accent-red-glow);
+            box-shadow: 0 4px 25px var(--accent-red-glow);
         }
 
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.8rem;
         }
 
         .logo-icon {
-            width: 24px;
-            height: 24px;
-            background-color: var(--accent-red);
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent-red-bright);
             transform: rotate(45deg);
-            box-shadow: 0 0 10px var(--accent-red);
+            box-shadow: 0 0 12px var(--accent-red-bright);
         }
 
         h1 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             color: var(--text-main);
         }
 
         h1 span {
-            color: var(--accent-red);
+            color: var(--accent-red-bright);
         }
 
-        .user-status {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            background: var(--bg-dark);
-            padding: 0.5rem 1rem;
+        .game-tag {
+            font-size: 0.8rem;
+            background: rgba(139, 0, 0, 0.15);
+            color: var(--accent-red-bright);
+            padding: 0.3rem 0.8rem;
             border-radius: 4px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--accent-red);
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
-        /* Main Layout */
+        /* Main Container */
         main {
             flex: 1;
-            padding: 2rem;
-            max-width: 1400px;
+            padding: 2.5rem 2rem;
+            max-width: 1300px;
             width: 100%;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 2rem;
         }
 
-        @media (max-width: 1024px) {
-            main {
-                grid-template-columns: 1fr;
-            }
+        .hero-section {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        /* Dashboard Sections */
+        .hero-title h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        .hero-title p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Search & Filter Bar */
+        .search-bar {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 300px;
+            transition: border-color 0.2s;
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--accent-red);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            width: 100%;
+        }
+
+        /* Items Table Card */
         .card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
         }
 
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Portfolio Overview */
-        .portfolio-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .stat-box {
-            background: var(--bg-dark);
-            padding: 1rem;
-            border-radius: 6px;
-            border-left: 4px solid var(--accent-red);
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-top: 0.25rem;
-        }
-
-        /* Trading Asset Table */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -149,124 +156,67 @@
         }
 
         th, td {
-            padding: 1rem;
+            padding: 1.1rem 1.5rem;
             border-bottom: 1px solid var(--border-color);
         }
 
         th {
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background-color: rgba(0,0,0,0.3);
+        }
+
+        tr:hover td {
+            background-color: rgba(139, 0, 0, 0.04);
+        }
+
+        .item-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .item-type {
+            font-size: 0.8rem;
+            color: var(--text-muted);
             text-transform: uppercase;
         }
 
-        td {
-            font-weight: 500;
-        }
-
-        .text-red {
-            color: var(--accent-red);
-        }
-
-        .text-green {
-            color: var(--green);
-        }
-
-        /* Trade Action Form */
-        .trade-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-
-        label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        select, input {
-            background: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 0.75rem;
+        /* Rarity Badges */
+        .badge {
+            padding: 0.25rem 0.6rem;
             border-radius: 4px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        select:focus, input:focus {
-            border-color: var(--accent-red);
-        }
-
-        .btn-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        button {
-            padding: 0.75rem;
-            border: none;
-            border-radius: 4px;
+            font-size: 0.75rem;
             font-weight: 700;
-            cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            transition: opacity 0.2s, transform 0.1s;
         }
 
-        button:active {
-            transform: scale(0.98);
+        .badge-godly { background: rgba(255, 34, 34, 0.15); color: var(--tier-godly); border: 1px solid rgba(255, 34, 34, 0.3); }
+        .badge-legendary { background: rgba(255, 136, 0, 0.15); color: var(--tier-legendary); border: 1px solid rgba(255, 136, 0, 0.3); }
+        .badge-epic { background: rgba(170, 0, 255, 0.15); color: var(--tier-epic); border: 1px solid rgba(170, 0, 255, 0.3); }
+        .badge-rare { background: rgba(0, 136, 255, 0.15); color: var(--tier-rare); border: 1px solid rgba(0, 136, 255, 0.3); }
+
+        .value-col {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-main);
         }
 
-        .btn-buy {
-            background-color: var(--green);
-            color: #000;
-        }
-
-        .btn-sell {
-            background-color: var(--accent-red);
-            color: #fff;
-            box-shadow: 0 0 10px var(--accent-red-glow);
-        }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        /* Activity Log */
-        .log-container {
-            max-height: 200px;
-            overflow-y: auto;
-            font-family: monospace;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .log-item {
-            padding: 0.4rem;
-            background: var(--bg-dark);
-            border-left: 2px solid var(--border-color);
-        }
+        .demand-high { color: #00ff66; font-weight: 600; }
+        .demand-stable { color: #cccccc; font-weight: 600; }
+        .demand-low { color: #ff3333; font-weight: 600; }
 
         /* Footer */
         footer {
             background-color: var(--bg-card);
             border-top: 1px solid var(--border-color);
             text-align: center;
-            padding: 1rem;
+            padding: 1.2rem;
             font-size: 0.85rem;
             color: var(--text-muted);
+            margin-top: auto;
         }
     </style>
 </head>
@@ -275,222 +225,104 @@
     <header>
         <div class="logo-area">
             <div class="logo-icon"></div>
-            <h1>Apex<span>Trade</span></h1>
+            <h1>HXP<span>Market</span></h1>
         </div>
-        <div class="user-status">
-            Balance: <span id="user-balance" class="text-green">$10,000.00</span>
-        </div>
+        <div class="game-tag">Knife VS Guns Duels Values</div>
     </header>
 
     <main>
-        <div class="left-column">
-            
-            <div class="card">
-                <div class="card-title">Portfolio Summary</div>
-                <div class="portfolio-stats">
-                    <div class="stat-box">
-                        <div class="stat-label">Net Asset Value</div>
-                        <div class="stat-value" id="nav-value">$10,000.00</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-label">Total P/L</div>
-                        <div class="stat-value text-green" id="total-pl">+$0.00 (0.00%)</div>
-                    </div>
-                </div>
+        <div class="hero-section">
+            <div class="hero-title">
+                <h2>Item Value List</h2>
+                <p>Live community values and demand tracking for Knife VS Guns Duels.</p>
             </div>
-
-            <div class="card">
-                <div class="card-title">Live Asset Values</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Asset</th>
-                            <th>Ticker</th>
-                            <th>Current Value</th>
-                            <th>24h Change</th>
-                        </tr>
-                    </thead>
-                    <tbody id="asset-table-body">
-                        </tbody>
-                </table>
+            <div class="search-bar">
+                <span>🔍</span>
+                <input type="text" id="searchInput" placeholder="Search weapon or knife..." onkeyup="filterItems()">
             </div>
-
         </div>
 
-        <div class="right-column">
-            
-            <div class="card">
-                <div class="card-title">Execute Order</div>
-                <div class="trade-form">
-                    <div class="input-group">
-                        <label for="asset-select">Select Asset</label>
-                        <select id="asset-select">
-                            </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="trade-amount">Quantity</label>
-                        <input type="number" id="trade-amount" min="1" value="1">
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn-buy" onclick="executeTrade('BUY')">Buy</button>
-                        <button class="btn-sell" onclick="executeTrade('SELL')">Sell</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-title">Transaction Log</div>
-                <div class="log-container" id="log-container">
-                    <div class="log-item">[System] Connected to secure trading feed.</div>
-                </div>
-            </div>
-
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Weapon Name</th>
+                        <th>Type</th>
+                        <th>Rarity</th>
+                        <th>Value</th>
+                        <th>Demand</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody id="valueTableBody">
+                    </tbody>
+            </table>
         </div>
     </main>
 
     <footer>
-        &copy; 2026 ApexTrade Protocol. All rights reserved. Built for high-frequency value assessment.
+        &copy; 2026 HXPMarket. Not affiliated with Roblox Corporation. Values update dynamically based on market status.
     </footer>
 
     <script>
-        // Initial Mock Data for Trading Values
-        const assets = [
-            { name: "Apex Protocol", ticker: "APEX", price: 342.50, change: 4.12 },
-            { name: "Vanguard Core", ticker: "VGC", price: 125.80, change: -1.45 },
-            { name: "Nexus Quantum", ticker: "NXQ", price: 89.20, change: 8.64 },
-            { name: "Obsidian Coin", ticker: "OBS", price: 12.40, change: -3.21 },
-            { name: "CyberNode Token", ticker: "CYBR", price: 450.00, change: 1.15 }
+        const itemDatabase = [
+            { name: "Bloodreign Blade", type: "Knife", rarity: "Godly", value: 4500, demand: "High", trend: "📈 Rising" },
+            { name: "Void-Caller Revolver", type: "Gun", rarity: "Godly", value: 3800, demand: "High", trend: "📈 Rising" },
+            { name: "Crimson Phantom", type: "Knife", rarity: "Godly", value: 2900, demand: "Stable", trend: "➖ Stable" },
+            { name: "Shadowstrike Carbine", type: "Gun", rarity: "Legendary", value: 1450, demand: "Stable", trend: "➖ Stable" },
+            { name: "Obsidian Dagger", type: "Knife", rarity: "Legendary", value: 950, demand: "Low", trend: "📉 Dropping" },
+            { name: "Neon Reaper", type: "Knife", rarity: "Godly", value: 5200, demand: "High", trend: "📈 Rising" },
+            { name: "Eclipse Blaster", type: "Gun", rarity: "Legendary", value: 1100, demand: "Stable", trend: "➖ Stable" },
+            { name: "Bloodlust Shiv", type: "Knife", rarity: "Epic", value: 350, demand: "Stable", trend: "➖ Stable" },
+            { name: "Toxic Enforcer", type: "Gun", rarity: "Epic", value: 420, demand: "Low", trend: "📉 Dropping" },
+            { name: "Standard Tactical", type: "Knife", rarity: "Rare", value: 50, demand: "Stable", trend: "➖ Stable" }
         ];
 
-        let userBalance = 10000.00;
-        let portfolioHoldings = {}; // Ticker -> Quantity
+        function renderTable(data) {
+            const tbody = document.getElementById('valueTableBody');
+            tbody.innerHTML = '';
 
-        // Initialize UI Elements
-        function initApp() {
-            const tableBody = document.getElementById('asset-table-body');
-            const assetSelect = document.getElementById('asset-select');
-
-            tableBody.innerHTML = '';
-            assetSelect.innerHTML = '';
-
-            assets.forEach(asset => {
-                // Populate Table
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><strong>${asset.name}</strong></td>
-                    <td class="text-muted">${asset.ticker}</td>
-                    <td id="price-${asset.ticker}">$${asset.price.toFixed(2)}</td>
-                    <td class="${asset.change >= 0 ? 'text-green' : 'text-red'}" id="change-${asset.ticker}">
-                        ${asset.change >= 0 ? '+' : ''}${asset.change.toFixed(2)}%
-                    </td>
-                `;
-                tableBody.appendChild(row);
-
-                // Populate Dropdown
-                const option = document.createElement('option');
-                option.value = asset.ticker;
-                option.textContent = `${asset.name} (${asset.ticker})`;
-                assetSelect.appendChild(option);
-
-                // Initialize Holdings tracker
-                portfolioHoldings[asset.ticker] = 0;
-            });
-
-            updatePortfolioDisplay();
-        }
-
-        // Simulate Live Market Value Fluctuations
-        function simulateMarket() {
-            assets.forEach(asset => {
-                // Random fluctuation between -1.5% and +1.5%
-                const fluctuation = (Math.random() * 3 - 1.48) / 100;
-                asset.price = Math.max(1, asset.price * (1 + fluctuation));
-                asset.change += fluctuation * 10;
-
-                // Update DOM elements dynamically
-                const priceEl = document.getElementById(`price-${asset.ticker}`);
-                const changeEl = document.getElementById(`change-${asset.ticker}`);
-
-                if (priceEl && changeEl) {
-                    priceEl.textContent = `$${asset.price.toFixed(2)}`;
-                    changeEl.textContent = `${asset.change >= 0 ? '+' : ''}${asset.change.toFixed(2)}%`;
-                    changeEl.className = asset.change >= 0 ? 'text-green' : 'text-red';
-                }
-            });
-
-            updatePortfolioDisplay();
-        }
-
-        // Execute Buy / Sell Orders
-        function executeTrade(type) {
-            const ticker = document.getElementById('asset-select').value;
-            const quantity = parseInt(document.getElementById('trade-amount').value);
-            const asset = assets.find(a => a.ticker === ticker);
-
-            if (!asset || isNaN(quantity) || quantity <= 0) {
-                logMessage("Error: Invalid trade parameters.");
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">No matching items found.</td></tr>`;
                 return;
             }
 
-            const totalCost = asset.price * quantity;
+            data.forEach(item => {
+                let badgeClass = 'badge-rare';
+                if (item.rarity === 'Godly') badgeClass = 'badge-godly';
+                else if (item.rarity === 'Legendary') badgeClass = 'badge-legendary';
+                else if (item.rarity === 'Epic') badgeClass = 'badge-epic';
 
-            if (type === 'BUY') {
-                if (userBalance < totalCost) {
-                    logMessage(`Failed BUY: Insufficient funds for ${quantity}x ${ticker}.`);
-                    alert("Insufficient balance to complete this order.");
-                    return;
-                }
-                userBalance -= totalCost;
-                portfolioHoldings[ticker] += quantity;
-                logMessage(`SUCCESS: Bought ${quantity}x ${ticker} at $${asset.price.toFixed(2)}`);
-            } else if (type === 'SELL') {
-                if (portfolioHoldings[ticker] < quantity) {
-                    logMessage(`Failed SELL: You don't own ${quantity}x ${ticker}.`);
-                    alert("You do not own enough units to sell this amount.");
-                    return;
-                }
-                userBalance += totalCost;
-                portfolioHoldings[ticker] -= quantity;
-                logMessage(`SUCCESS: Sold ${quantity}x ${ticker} at $${asset.price.toFixed(2)}`);
-            }
+                let demandClass = 'demand-stable';
+                if (item.demand === 'High') demandClass = 'demand-high';
+                else if (item.demand === 'Low') demandClass = 'demand-low';
 
-            updatePortfolioDisplay();
-        }
-
-        // Calculate and Update Portfolio Metrics
-        function updatePortfolioDisplay() {
-            document.getElementById('user-balance').textContent = `$${userBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-
-            let holdingsValue = 0;
-            assets.forEach(asset => {
-                holdingsValue += portfolioHoldings[asset.ticker] * asset.price;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><div class="item-name">${item.name}</div></td>
+                    <td><div class="item-type">${item.type}</div></td>
+                    <td><span class="badge ${badgeClass}">${item.rarity}</span></td>
+                    <td class="value-col">💎 ${item.value.toLocaleString()}</td>
+                    <td><span class="${demandClass}">${item.demand}</span></td>
+                    <td>${item.trend}</td>
+                `;
+                tbody.appendChild(row);
             });
-
-            const netAssetValue = userBalance + holdingsValue;
-            document.getElementById('nav-value').textContent = `$${netAssetValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-
-            const totalPL = netAssetValue - 10000;
-            const plPercentage = (totalPL / 10000) * 100;
-            const plElement = document.getElementById('total-pl');
-            
-            plElement.textContent = `${totalPL >= 0 ? '+' : ''}$${totalPL.toFixed(2)} (${plPercentage.toFixed(2)}%)`;
-            plElement.className = `stat-value ${totalPL >= 0 ? 'text-green' : 'text-red'}`;
         }
 
-        // Add to Transaction Activity Log
-        function logMessage(text) {
-            const container = document.getElementById('log-container');
-            const timestamp = new Date().toLocaleTimeString();
-            const logItem = document.createElement('div');
-            logItem.className = 'log-item';
-            logItem.textContent = `[${timestamp}] ${text}`;
-            container.prepend(logItem);
+        function filterItems() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = itemDatabase.filter(item => 
+                item.name.toLowerCase().includes(query) || 
+                item.type.toLowerCase().includes(query) || 
+                item.rarity.toLowerCase().includes(query)
+            );
+            renderTable(filtered);
         }
 
-        // Run application on load & set ticker interval (updates every 3 seconds)
+        // Initial render on load
         window.onload = () => {
-            initApp();
-            setInterval(simulateMarket, 3000);
+            renderTable(itemDatabase);
         };
     </script>
 </body>
