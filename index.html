@@ -9,7 +9,7 @@
             --bg-dark: #070707;
             --bg-card: #0f0f0f;
             --border-color: #1f1f1f;
-            --accent-red: #8b0000; /* Shadier blood red */
+            --accent-red: #8b0000;
             --accent-red-bright: #b22222;
             --accent-red-glow: rgba(139, 0, 0, 0.25);
             --text-main: #f0f0f0;
@@ -18,6 +18,8 @@
             --tier-legendary: #ff8800;
             --tier-epic: #aa00ff;
             --tier-rare: #0088ff;
+            --tier-common: #aaaaaa;
+            --tag-unobtainable: #ff3333;
         }
 
         * {
@@ -35,7 +37,6 @@
             flex-direction: column;
         }
 
-        /* Header / Navbar */
         header {
             background-color: var(--bg-card);
             border-bottom: 2px solid var(--accent-red);
@@ -83,7 +84,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Main Container */
         main {
             flex: 1;
             padding: 2.5rem 2rem;
@@ -114,7 +114,6 @@
             font-size: 0.95rem;
         }
 
-        /* Search & Filter Bar */
         .search-bar {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -140,7 +139,6 @@
             width: 100%;
         }
 
-        /* Items Table Card */
         .card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -172,9 +170,27 @@
             background-color: rgba(139, 0, 0, 0.04);
         }
 
+        .item-container {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
         .item-name {
             font-weight: 700;
             font-size: 1.05rem;
+        }
+
+        .unobtainable-tag {
+            font-size: 0.65rem;
+            background: rgba(255, 51, 51, 0.15);
+            color: var(--tag-unobtainable);
+            border: 1px solid rgba(255, 51, 51, 0.4);
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
         }
 
         .item-type {
@@ -183,7 +199,6 @@
             text-transform: uppercase;
         }
 
-        /* Rarity Badges */
         .badge {
             padding: 0.25rem 0.6rem;
             border-radius: 4px;
@@ -197,6 +212,7 @@
         .badge-legendary { background: rgba(255, 136, 0, 0.15); color: var(--tier-legendary); border: 1px solid rgba(255, 136, 0, 0.3); }
         .badge-epic { background: rgba(170, 0, 255, 0.15); color: var(--tier-epic); border: 1px solid rgba(170, 0, 255, 0.3); }
         .badge-rare { background: rgba(0, 136, 255, 0.15); color: var(--tier-rare); border: 1px solid rgba(0, 136, 255, 0.3); }
+        .badge-common { background: rgba(170, 170, 170, 0.15); color: var(--tier-common); border: 1px solid rgba(170, 170, 170, 0.3); }
 
         .value-col {
             font-weight: 700;
@@ -208,7 +224,6 @@
         .demand-stable { color: #cccccc; font-weight: 600; }
         .demand-low { color: #ff3333; font-weight: 600; }
 
-        /* Footer */
         footer {
             background-color: var(--bg-card);
             border-top: 1px solid var(--border-color);
@@ -233,12 +248,12 @@
     <main>
         <div class="hero-section">
             <div class="hero-title">
-                <h2>Item Value List</h2>
-                <p>Live community values and demand tracking for Knife VS Guns Duels.</p>
+                <h2>Weapon Value List</h2>
+                <p>Complete weapon database tracking rarities, trade values, and unobtainable legacy items.</p>
             </div>
             <div class="search-bar">
                 <span>🔍</span>
-                <input type="text" id="searchInput" placeholder="Search weapon or knife..." onkeyup="filterItems()">
+                <input type="text" id="searchInput" placeholder="Search weapon..." onkeyup="filterItems()">
             </div>
         </div>
 
@@ -255,27 +270,32 @@
                     </tr>
                 </thead>
                 <tbody id="valueTableBody">
-                    </tbody>
+                    <!-- Populated dynamically via JavaScript -->
+                </tbody>
             </table>
         </div>
     </main>
 
     <footer>
-        &copy; 2026 HXPMarket. Not affiliated with Roblox Corporation. Values update dynamically based on market status.
+        &copy; 2026 HXPMarket. Not affiliated with Roblox Corporation. Values update dynamically.
     </footer>
 
     <script>
         const itemDatabase = [
-            { name: "Bloodreign Blade", type: "Knife", rarity: "Godly", value: 4500, demand: "High", trend: "📈 Rising" },
-            { name: "Void-Caller Revolver", type: "Gun", rarity: "Godly", value: 3800, demand: "High", trend: "📈 Rising" },
-            { name: "Crimson Phantom", type: "Knife", rarity: "Godly", value: 2900, demand: "Stable", trend: "➖ Stable" },
-            { name: "Shadowstrike Carbine", type: "Gun", rarity: "Legendary", value: 1450, demand: "Stable", trend: "➖ Stable" },
-            { name: "Obsidian Dagger", type: "Knife", rarity: "Legendary", value: 950, demand: "Low", trend: "📉 Dropping" },
-            { name: "Neon Reaper", type: "Knife", rarity: "Godly", value: 5200, demand: "High", trend: "📈 Rising" },
-            { name: "Eclipse Blaster", type: "Gun", rarity: "Legendary", value: 1100, demand: "Stable", trend: "➖ Stable" },
-            { name: "Bloodlust Shiv", type: "Knife", rarity: "Epic", value: 350, demand: "Stable", trend: "➖ Stable" },
-            { name: "Toxic Enforcer", type: "Gun", rarity: "Epic", value: 420, demand: "Low", trend: "📉 Dropping" },
-            { name: "Standard Tactical", type: "Knife", rarity: "Rare", value: 50, demand: "Stable", trend: "➖ Stable" }
+            { name: "Bloodreign Blade", type: "Knife", rarity: "Godly", value: 4500, demand: "High", trend: "📈 Rising", unobtainable: false },
+            { name: "Void-Caller Revolver", type: "Gun", rarity: "Godly", value: 3800, demand: "High", trend: "📈 Rising", unobtainable: false },
+            { name: "Crimson Phantom", type: "Knife", rarity: "Godly", value: 2900, demand: "Stable", trend: "➖ Stable", unobtainable: true },
+            { name: "Shadowstrike Carbine", type: "Gun", rarity: "Legendary", value: 1450, demand: "Stable", trend: "➖ Stable", unobtainable: false },
+            { name: "Obsidian Dagger", type: "Knife", rarity: "Legendary", value: 950, demand: "Low", trend: "📉 Dropping", unobtainable: true },
+            { name: "Neon Reaper", type: "Knife", rarity: "Godly", value: 5200, demand: "High", trend: "📈 Rising", unobtainable: false },
+            { name: "Eclipse Blaster", type: "Gun", rarity: "Legendary", value: 1100, demand: "Stable", trend: "➖ Stable", unobtainable: false },
+            { name: "Bloodlust Shiv", type: "Knife", rarity: "Epic", value: 350, demand: "Stable", trend: "➖ Stable", unobtainable: false },
+            { name: "Toxic Enforcer", type: "Gun", rarity: "Epic", value: 420, demand: "Low", trend: "📉 Dropping", unobtainable: true },
+            { name: "Pixel Knife", type: "Knife", rarity: "Uncommon", value: 500000, demand: "High", trend: "📈 Rising", unobtainable: true },
+            { name: "Yuletide Knife", type: "Knife", rarity: "Uncommon", value: 700000, demand: "High", trend: "📈 Rising", unobtainable: true },
+            { name: "Shimmer Knife", type: "Knife", rarity: "Common", value: 25, demand: "Low", trend: "➖ Stable", unobtainable: false },
+            { name: "Chrome Gun", type: "Gun", rarity: "Common", value: 20, demand: "Low", trend: "➖ Stable", unobtainable: false },
+            { name: "Standard Tactical", type: "Knife", rarity: "Rare", value: 50, demand: "Stable", trend: "➖ Stable", unobtainable: false }
         ];
 
         function renderTable(data) {
@@ -288,18 +308,27 @@
             }
 
             data.forEach(item => {
-                let badgeClass = 'badge-rare';
+                let badgeClass = 'badge-common';
                 if (item.rarity === 'Godly') badgeClass = 'badge-godly';
                 else if (item.rarity === 'Legendary') badgeClass = 'badge-legendary';
                 else if (item.rarity === 'Epic') badgeClass = 'badge-epic';
+                else if (item.rarity === 'Rare') badgeClass = 'badge-rare';
+                else if (item.rarity === 'Uncommon') badgeClass = 'badge-epic';
 
                 let demandClass = 'demand-stable';
                 if (item.demand === 'High') demandClass = 'demand-high';
                 else if (item.demand === 'Low') demandClass = 'demand-low';
 
+                const unobtainableHTML = item.unobtainable ? `<span class="unobtainable-tag">UNOBTAINABLE</span>` : '';
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td><div class="item-name">${item.name}</div></td>
+                    <td>
+                        <div class="item-container">
+                            <span class="item-name">${item.name}</span>
+                            ${unobtainableHTML}
+                        </div>
+                    </td>
                     <td><div class="item-type">${item.type}</div></td>
                     <td><span class="badge ${badgeClass}">${item.rarity}</span></td>
                     <td class="value-col">💎 ${item.value.toLocaleString()}</td>
@@ -320,7 +349,6 @@
             renderTable(filtered);
         }
 
-        // Initial render on load
         window.onload = () => {
             renderTable(itemDatabase);
         };
